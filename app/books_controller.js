@@ -7,6 +7,8 @@ bookly.BooksController = function($scope) {
   $scope.books = books;
   //Code to manage cart goes here
   $scope.cart_items = [];
+  $scope.item_count = 0;
+  $scope.total = 0;
   $scope.addBooks = function($index) {
     thisBook = {id: books[$index].id, title: books[$index].title, author: books[$index].author, 
       price: books[$index].price, quantity: 1};
@@ -21,7 +23,9 @@ bookly.BooksController = function($scope) {
       }
     else { $scope.cart_items.push(thisBook); }
     
-    console.log($scope.cart_items);
+    // add to item count and cart total
+    $scope.item_count += 1;
+    $scope.total += thisBook.price;
     
   };
 };
