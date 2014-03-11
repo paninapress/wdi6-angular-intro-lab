@@ -14,9 +14,10 @@ bookly.BooksController = function($scope) {
       price: books[$index].price, quantity: 1};
 
     if ($scope.cart_items.length > 0){
-        _.each($scope.cart_items, function(book){
+        _.find($scope.cart_items, function(book){
           if (book.id === thisBook.id){
              book.quantity += 1; 
+             console.log(book.id);
             }
           else { $scope.cart_items.push(thisBook); }
         });
@@ -26,6 +27,13 @@ bookly.BooksController = function($scope) {
     // add to item count and cart total
     $scope.item_count += 1;
     $scope.total += thisBook.price;
+    console.log(thisBook);
     
+  };
+
+  $scope.empty = function(){
+    $scope.cart_items = [];
+    $scope.item_count = 0;
+    $scope.total = 0;
   };
 };
