@@ -4,6 +4,7 @@
   <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
   <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 
   <link href="main.css" rel="stylesheet" type="text/css" />
   <script src ="data.js"></script>
@@ -12,9 +13,16 @@
 
 <body>
    <div ng-controller="bookly.BooksController" class="container">
-      <h4>[[ search box and 'order by' drop down go here]]</h4>
+      <h4>
+        Search: <input type="text" ng-model="query">
+        Sort By:
+        <select ng-model="orderBooks">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="price">Price</option>
+        </select></h4>
       <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 book" ng-repeat="book in books">
+        <div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 book" ng-repeat="book in books | filter:query | orderBy:orderBooks">
           <div class="col-xs-offset-1 book-title">
             {{book.title}}
           </div>
@@ -27,7 +35,7 @@
 
           <div class="cart-button">
             <span class="price">{{book.price | currency}}
-             [[Add]] <!-- Add to cart button  -->
+             <button ng-click="addBooks($index)">Add</button> <!-- Add to cart button  -->
           </div>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 cart">
@@ -36,8 +44,8 @@
           <tr>
             <th width='40%'>Title</th><th width='40%'>Author</th><th width='20%'>Price</th>
           </tr>
-          <tr>
-            <td colspan=3>[[a row for each cart item]]</td>
+          <tr ng-repeat="book in cart_items">
+            <td colspan=1 width='40%'>{{book.title}}</td> <td colspan=1 width='40%'>{{book.author}}</td>  <td colspan=1 width='20%'>{{book.price | currency}}</td>
           </tr>
           <tr class="cart-total">
             <td colspan=2 width='80%'>Total</td><td width='20%'>[[total]]</td>
